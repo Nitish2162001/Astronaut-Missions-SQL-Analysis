@@ -1,0 +1,65 @@
+-- =====================================
+-- 1. Create Astronauts Table
+-- =====================================
+CREATE TABLE Astronauts (
+    Astronaut_ID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Agency VARCHAR(50) NOT NULL,
+    Nationality VARCHAR(50) NOT NULL
+);
+
+-- =====================================
+-- 2. Create Missions Table
+-- =====================================
+CREATE TABLE Missions (
+    Mission_ID INT PRIMARY KEY,
+    Mission_Name VARCHAR(100) NOT NULL,
+    Total_Miles_Travelled BIGINT NOT NULL,
+    Total_Days_Spent INT NOT NULL,
+    Total_Orbits_Completed INT NOT NULL,
+    Return_Time TIMESTAMP NOT NULL
+);
+
+-- =====================================
+-- 3. Create Astronaut_Mission Table
+-- =====================================
+CREATE TABLE Astronaut_Mission (
+    Astronaut_Mission_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Astronaut_ID INT NOT NULL,
+    Mission_ID INT NOT NULL,
+    Role VARCHAR(50) NOT NULL,
+    FOREIGN KEY (Astronaut_ID) REFERENCES Astronauts(Astronaut_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Mission_ID) REFERENCES Missions(Mission_ID) ON DELETE CASCADE
+);
+
+-- =====================================
+-- 4. Insert Sample Data
+-- =====================================
+
+-- Insert Astronaut Data
+INSERT INTO Astronauts (Astronaut_ID, Name, Agency, Nationality) VALUES
+(1, 'Nick Hague', 'NASA', 'USA'),
+(2, 'Suni Williams', 'NASA', 'USA'),
+(3, 'Butch Wilmore', 'NASA', 'USA'),
+(4, 'Aleksandr Gorbunov', 'Roscosmos', 'Russia'),
+(5, 'Matthew Dominick', 'NASA', 'USA'),
+(6, 'Michael Barratt', 'NASA', 'USA'),
+(7, 'Jeanette Epps', 'NASA', 'USA'),
+(8, 'Alexander Grebenkin', 'Roscosmos', 'Russia');
+
+-- Insert Mission Data
+INSERT INTO Missions (Mission_ID, Mission_Name, Total_Miles_Travelled, Total_Days_Spent, Total_Orbits_Completed, Return_Time) 
+VALUES
+(1, 'Expedition Mission', 121347491, 286, 4576, '2025-03-19 17:57:00'),
+(2, 'SpaceX Crew-9', 5400000, 180, 2880, '2025-08-22 10:30:00');
+
+-- Assign Astronauts to Missions
+INSERT INTO Astronaut_Mission (Astronaut_ID, Mission_ID, Role) VALUES
+(1, 1, 'Crew Member'),
+(2, 1, 'Commander'),
+(3, 1, 'Pilot'),
+(4, 1, 'Engineer'),
+(5, 2, 'Commander'),
+(6, 2, 'Pilot'),
+(7, 2, 'Mission Specialist'),
+(8, 2, 'Engineer');
